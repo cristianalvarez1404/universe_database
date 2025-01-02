@@ -49,10 +49,10 @@ SET default_table_access_method = heap;
 
 CREATE TABLE public.galaxy (
     galaxy_id integer NOT NULL,
-    name character varying(50),
+    name character varying(50) NOT NULL,
     age_in_millions_of_year integer,
     distance_from_earth integer,
-    temperature numeric(4,2),
+    temperature numeric(5,2),
     description text,
     has_life boolean,
     is_spherical boolean
@@ -96,7 +96,7 @@ CREATE TABLE public.moon (
     description text,
     has_life boolean,
     is_spherical boolean,
-    planet_id integer
+    planet_id integer NOT NULL
 );
 
 
@@ -137,7 +137,7 @@ CREATE TABLE public.planet (
     description text,
     has_life boolean,
     is_spherical boolean,
-    star_id integer
+    star_id integer NOT NULL
 );
 
 
@@ -178,7 +178,7 @@ CREATE TABLE public.star (
     description text,
     has_life boolean,
     is_spherical boolean,
-    galaxy_id integer
+    galaxy_id integer NOT NULL
 );
 
 
@@ -238,6 +238,12 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 -- Data for Name: galaxy; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
+INSERT INTO public.galaxy VALUES (1, 'via lactea', 13, 0, -270.00, 'Nuestra galaxia, compuesta por miles de millones de estrellas', true, false);
+INSERT INTO public.galaxy VALUES (2, 'Andromeda', 10, 2537, -270.00, 'La galaxia más cercana a la Vía Láctea, se espera que colisione con ella en unos 4.5 mil millones de años.', false, false);
+INSERT INTO public.galaxy VALUES (3, 'Galaxia de sombrero', 10, 28, -270.00, 'Galaxia espiral con un gran bulbo central, visible en el cielo como una estructura de sombrero.', false, false);
+INSERT INTO public.galaxy VALUES (4, 'Messier 87 (M87)', 13, 53, -270.00, 'Una galaxia elíptica gigante en el centro del cúmulo Virgo, conocida por su agujero negro supermasivo.', false, false);
+INSERT INTO public.galaxy VALUES (5, 'NGC 1300', 10, 61, -270.00, 'Una galaxia espiral barrada, visible desde la Tierra en la constelación de Eridanus.', false, false);
+INSERT INTO public.galaxy VALUES (6, 'IC 1101', 13, 1004, -270.00, 'Una de las galaxias más grandes conocidas, con un tamaño mucho mayor que la Vía Láctea.', false, false);
 
 
 --
@@ -262,7 +268,7 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 -- Name: galaxy_galaxy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 1, false);
+SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 6, true);
 
 
 --
@@ -287,6 +293,14 @@ SELECT pg_catalog.setval('public.star_star_id_seq', 1, false);
 
 
 --
+-- Name: galaxy galaxy_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.galaxy
+    ADD CONSTRAINT galaxy_name_key UNIQUE (name);
+
+
+--
 -- Name: galaxy galaxy_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
@@ -303,11 +317,35 @@ ALTER TABLE ONLY public.moon
 
 
 --
+-- Name: moon moon_planet_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_planet_id_key UNIQUE (planet_id);
+
+
+--
 -- Name: planet planet_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
 ALTER TABLE ONLY public.planet
     ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
+
+
+--
+-- Name: planet planet_star_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT planet_star_id_key UNIQUE (star_id);
+
+
+--
+-- Name: star star_galaxy_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.star
+    ADD CONSTRAINT star_galaxy_id_key UNIQUE (galaxy_id);
 
 
 --
