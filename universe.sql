@@ -39,9 +39,36 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: comet_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.comet_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.comet_id_seq OWNER TO freecodecamp;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
+
+--
+-- Name: comet; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.comet (
+    comet_id integer DEFAULT nextval('public.comet_id_seq'::regclass) NOT NULL,
+    name character varying(255) NOT NULL,
+    description text NOT NULL
+);
+
+
+ALTER TABLE public.comet OWNER TO freecodecamp;
 
 --
 -- Name: galaxy; Type: TABLE; Schema: public; Owner: freecodecamp
@@ -92,7 +119,7 @@ CREATE TABLE public.moon (
     name character varying(50),
     age_in_millions_of_year integer,
     distance_from_earth integer,
-    temperature numeric(4,2),
+    temperature numeric(5,2),
     description text,
     has_life boolean,
     is_spherical boolean,
@@ -133,7 +160,7 @@ CREATE TABLE public.planet (
     name character varying(255),
     age_in_millions_of_year integer,
     distance_from_earth integer,
-    temperature numeric(4,2),
+    temperature numeric(5,2),
     description text,
     has_life boolean,
     is_spherical boolean,
@@ -235,6 +262,15 @@ ALTER TABLE ONLY public.star ALTER COLUMN star_id SET DEFAULT nextval('public.st
 
 
 --
+-- Data for Name: comet; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+INSERT INTO public.comet VALUES (1, 'Cometa Halley', 'Es uno de los cometas más famosos y visibles desde la Tierra, con un período orbital de aproximadamente 76 años. Se ha observado desde hace más de 2,000 años. El último paso cercano a la Tierra fue en 1986.');
+INSERT INTO public.comet VALUES (2, 'Cometa Hale-Bopp', 'Fue uno de los cometas más brillantes y visibles a simple vista en el siglo XX. Fue descubierto en 1995 y se acercó a la Tierra en 1997. Tiene un período orbital de más de 2,400 años.');
+INSERT INTO public.comet VALUES (3, 'Cometa NEOWISE (C/2020 F3)', 'Descubierto en marzo de 2020 por el satélite NEOWISE, este cometa fue visible a simple vista desde la Tierra en el verano de 2020. Su paso cercano a la Tierra fue uno de los más espectaculares en años recientes.');
+
+
+--
 -- Data for Name: galaxy; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
@@ -256,6 +292,20 @@ INSERT INTO public.moon VALUES (3, 'Luna en M104 (Galaxia Sombrero)', 1000, 50, 
 INSERT INTO public.moon VALUES (4, 'Luna hipotética en M87 (cúmulos globulares)', 1000, 55, NULL, 'Los cúmulos globulares no favorecen la formación de lunas, pero si existieran, serían lunas frías orbitando planetas en sistemas viejos.', false, false, 4);
 INSERT INTO public.moon VALUES (5, 'Luna en el sistema de NGC 2244 (Nebulosa Rosetta)', 4, 4500, NULL, 'NGC 2244 es un cúmulo joven con estrellas calientes. Las lunas en este sistema podrían estar en formación y ser muy jóvenes.', false, false, 5);
 INSERT INTO public.moon VALUES (6, 'Luna en el sistema de IC 1101', 1000, 1, NULL, 'IC 1101 es una galaxia gigante. Si tuviera planetas con lunas, estas lunas podrían estar en sistemas estelares viejos y ser frías o lejanas.', false, false, 6);
+INSERT INTO public.moon VALUES (21, 'Luna (Tierra)', 5, 1, -53.00, 'La luna de la Tierra, la única luna natural de nuestro planeta.', false, true, 1);
+INSERT INTO public.moon VALUES (22, 'Ío', 5, 628, -143.00, 'Luna volcánica de Júpiter, con actividad geotérmica intensa.', false, true, 2);
+INSERT INTO public.moon VALUES (23, 'Europa', 5, 628, -160.00, 'Luna de Júpiter con un océano subterráneo, considerada candidata para vida.', true, true, 3);
+INSERT INTO public.moon VALUES (24, 'Ganímedes', 5, 628, -163.00, 'La luna más grande del sistema solar, tiene un océano subterráneo.', false, true, 4);
+INSERT INTO public.moon VALUES (25, 'Calisto', 5, 628, -139.00, 'Luna de Júpiter con una superficie helada, con posibilidad de océanos subterráneos.', false, true, 5);
+INSERT INTO public.moon VALUES (26, 'Titán', 5, 1222, -179.00, 'Luna de Saturno, con atmósfera densa y lagos de metano líquido.', false, true, 6);
+INSERT INTO public.moon VALUES (27, 'Encelado', 5, 1267, -201.00, 'Luna de Saturno, famosa por sus géiseres que podrían sugerir actividad biológica.', true, true, 8);
+INSERT INTO public.moon VALUES (28, 'Mimas', 5, 1222, -193.00, 'Luna de Saturno, conocida por su gran cráter Herschel.', false, true, 8);
+INSERT INTO public.moon VALUES (29, 'Rea', 5, 1222, -220.00, 'Luna de Saturno, cubierta de hielo, es una de las lunas más grandes.', false, true, 9);
+INSERT INTO public.moon VALUES (30, 'Tritón', 5, 4, -235.00, 'Luna de Neptuno, tiene una órbita retrógrada, lo que sugiere que podría haber sido capturada.', false, true, 10);
+INSERT INTO public.moon VALUES (31, 'Lunas de Marte (Fobos)', 5, 10, -50.00, 'Luna irregular de Marte, se acerca cada vez más al planeta.', false, false, 11);
+INSERT INTO public.moon VALUES (32, 'Lunas de Marte (Deimos)', 5, 24, -50.00, 'Luna irregular de Marte, más alejada que Fobos.', false, false, 12);
+INSERT INTO public.moon VALUES (33, 'Oberón', 5, 4, -214.00, 'Luna de Urano, cubierta de hielo y con grandes cañones.', false, true, 1);
+INSERT INTO public.moon VALUES (34, 'Titania', 5, 4, -224.00, 'Luna de Urano, la más grande de este planeta, tiene una atmósfera tenue.', false, true, 2);
 
 
 --
@@ -268,6 +318,12 @@ INSERT INTO public.planet VALUES (3, 'Planeta en el Sistema de HD 100215 (Galaxi
 INSERT INTO public.planet VALUES (4, 'Planetas en M87 (cúmulos globulares),', 1000, 55, NULL, 'Los planetas en los cúmulos globulares que rodean M87 son hipotéticos, ya que no se han confirmado planetas alrededor de M87 específicamente.', false, false, 4);
 INSERT INTO public.planet VALUES (5, 'Exoplaneta en el Cúmulo NGC 2244 (Nebulosa Rosetta),', 4, 4500, NULL, 'El cúmulo NGC 2244 es joven y contiene estrellas calientes, lo que sugiere que algunos planetas en este sistema podrían ser muy calientes.', false, false, 5);
 INSERT INTO public.planet VALUES (6, 'Planeta en el Sistema de IC 1101', 1000, 100, NULL, 'IC 1101 es una galaxia elíptica gigante, y aunque no se han confirmado planetas específicos, se cree que podrían existir planetas alrededor de estrellas en su periferia.', false, false, 6);
+INSERT INTO public.planet VALUES (8, 'Kepler-452b', 6, 1, 30.00, 'Planeta similar a la Tierra, potencialmente habitable, en zona habitable de su estrella.', true, true, 1);
+INSERT INTO public.planet VALUES (9, 'Proxima b', 5, 4, 40.00, 'Planeta rocoso, en la zona habitable de la estrella enana roja Proxima Centauri.', true, true, 2);
+INSERT INTO public.planet VALUES (10, 'HD 100215 b', 1, 300, 120.00, 'Planeta gigante gaseoso en la zona habitable de una estrella de tipo K.', false, true, 3);
+INSERT INTO public.planet VALUES (11, 'Kepler-22b', 3, 620, 22.00, 'Exoplaneta con clima templado, dentro de la zona habitable de su estrella.', true, true, 4);
+INSERT INTO public.planet VALUES (12, 'HD 46223 b', 3, 300, 90.00, 'Exoplaneta gaseoso, con una atmósfera densa, orbita una estrella tipo G.', false, true, 5);
+INSERT INTO public.planet VALUES (13, 'WASP-12b', 500, 2, 2.00, 'Planeta gigante caliente, con temperaturas extremas, cercano a su estrella.', false, true, 6);
 
 
 --
@@ -283,6 +339,13 @@ INSERT INTO public.star VALUES (6, 'IC 1101-1 (Galaxia IC 1101)', 10, 2000, 6.00
 
 
 --
+-- Name: comet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.comet_id_seq', 3, true);
+
+
+--
 -- Name: galaxy_galaxy_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
@@ -293,14 +356,14 @@ SELECT pg_catalog.setval('public.galaxy_galaxy_id_seq', 6, true);
 -- Name: moon_moon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.moon_moon_id_seq', 6, true);
+SELECT pg_catalog.setval('public.moon_moon_id_seq', 34, true);
 
 
 --
 -- Name: planet_planet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
 --
 
-SELECT pg_catalog.setval('public.planet_planet_id_seq', 6, true);
+SELECT pg_catalog.setval('public.planet_planet_id_seq', 13, true);
 
 
 --
@@ -308,6 +371,22 @@ SELECT pg_catalog.setval('public.planet_planet_id_seq', 6, true);
 --
 
 SELECT pg_catalog.setval('public.star_star_id_seq', 6, true);
+
+
+--
+-- Name: comet comet_description_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.comet
+    ADD CONSTRAINT comet_description_key UNIQUE (description);
+
+
+--
+-- Name: comet comet_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.comet
+    ADD CONSTRAINT comet_pkey PRIMARY KEY (comet_id);
 
 
 --
@@ -327,6 +406,14 @@ ALTER TABLE ONLY public.galaxy
 
 
 --
+-- Name: moon moon_description_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.moon
+    ADD CONSTRAINT moon_description_key UNIQUE (description);
+
+
+--
 -- Name: moon moon_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
@@ -335,11 +422,11 @@ ALTER TABLE ONLY public.moon
 
 
 --
--- Name: moon moon_planet_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+-- Name: planet planet_description_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.moon
-    ADD CONSTRAINT moon_planet_id_key UNIQUE (planet_id);
+ALTER TABLE ONLY public.planet
+    ADD CONSTRAINT planet_description_key UNIQUE (description);
 
 
 --
@@ -348,14 +435,6 @@ ALTER TABLE ONLY public.moon
 
 ALTER TABLE ONLY public.planet
     ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
-
-
---
--- Name: planet planet_star_id_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
---
-
-ALTER TABLE ONLY public.planet
-    ADD CONSTRAINT planet_star_id_key UNIQUE (star_id);
 
 
 --
